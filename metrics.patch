@@ -1,0 +1,35 @@
+From 3f60f51cf86ab6b35469623778b66011e0a94118 Mon Sep 17 00:00:00 2001
+From: Eduard Mielieshkin <proxaker@workmail.com>
+Date: Sat, 2 Mar 2024 10:49:46 +0200
+Subject: [PATCH] Disallow setting the 'trace' log level for
+ io.opentelemetry.sdk.metrics
+
+---
+ .../agent/internal/init/LoggingLevelConfigurator.java         | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/agent/agent-tooling/src/main/java/com/microsoft/applicationinsights/agent/internal/init/LoggingLevelConfigurator.java b/agent/agent-tooling/src/main/java/com/microsoft/applicationinsights/agent/internal/init/LoggingLevelConfigurator.java
+index 25eeec43c7..44732bbc9c 100644
+--- a/agent/agent-tooling/src/main/java/com/microsoft/applicationinsights/agent/internal/init/LoggingLevelConfigurator.java
++++ b/agent/agent-tooling/src/main/java/com/microsoft/applicationinsights/agent/internal/init/LoggingLevelConfigurator.java
+@@ -33,6 +33,7 @@ public class LoggingLevelConfigurator {
+     updateLoggerLevel(loggerContext.getLogger("io.opentelemetry.exporter.logging"));
+     updateLoggerLevel(
+         loggerContext.getLogger("io.opentelemetry.sdk.metrics.internal.state.DeltaMetricStorage"));
++    updateLoggerLevel(loggerContext.getLogger("io.opentelemetry.sdk.metrics"));
+     updateLoggerLevel(loggerContext.getLogger("io.opentelemetry"));
+     updateLoggerLevel(loggerContext.getLogger("muzzleMatcher"));
+     updateLoggerLevel(
+@@ -69,6 +70,9 @@ public class LoggingLevelConfigurator {
+       loggerLevel = level;
+     } else if (name.equals("io.opentelemetry.sdk.metrics.internal.state.DeltaMetricStorage")) {
+       loggerLevel = getDeltaMetricStorageLoggerLevel(level);
++    } else if (name.startsWith("io.opentelemetry.sdk.metrics")) {
++      // FIXME do not allow the "trace" log level to be set while applications like Spark fail over
++      loggerLevel = getAtLeastInfoLevel(level);
+     } else if (name.startsWith("io.opentelemetry")) {
+       // OpenTelemetry instrumentation debug log has lots of things that look like errors
+       // which has been confusing customers, so only enable it when user configures "trace" level
+-- 
+2.34.1
+
