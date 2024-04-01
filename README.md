@@ -7,21 +7,21 @@ This repository is created to reproduce the issue described
 
 ### Install Spark
 
-1. Download Spark:
+1. Download Spark:  
    https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
-2. Download Hadoop compiled for Windows (`winutils.exe`):
+2. Download Hadoop compiled for Windows (`winutils.exe`):  
    https://github.com/cdarlint/winutils/raw/master/hadoop-3.3.5/bin/winutils.exe
-3. Navigate to the folder where Spark and Hadoop will be placed,
+3. Navigate to the folder where Spark and Hadoop will be placed,  
    for example: `C:\Users\progxaker\Downloads`.
-4. Create a new folder named Spark
+4. Create a new folder named Spark  
    (e.g., `C:\Users\progxaker\Downloads\Spark`).
-5. Unpack the Spark archive to the created folder
+5. Unpack the Spark archive to the created folder  
    (e.g., `C:\Users\progxaker\Downloads\Spark\spark-3.5.0-bin-hadoop3`).
-6. Create a new folder named Hadoop
+6. Create a new folder named Hadoop  
    (e.g., `C:\Users\progxaker\Downloads\Hadoop`).
-7. Create a new folder named bin in the created folder
+7. Create a new folder named bin in the created folder  
    (e.g., `C:\Users\progxaker\Downloads\Hadoop\bin`).
-8. Move the Hadoop binary to the created folder
+8. Move the Hadoop binary to the created folder  
    (e.g., `C:\Users\progxaker\Downloads\Hadoop\bin\winutils.exe`).
 
 ### Download the Application Insights JVM agent
@@ -69,7 +69,7 @@ This repository is created to reproduce the issue described
     SET APPLICATIONINSIGHTS_SELF_DIAGNOSTICS_LEVEL=TRACE
     %SPARK_HOME%\bin\spark-submit --class SimpleApp --master local[4] <absolute-path-to-the-clonned-repository>\target\simple-project-1.0.jar
     ```
-  Please note that **no quotes** are required.
+    Please note that **no quotes** are required.
 
 ## (Linux) Docker
 
